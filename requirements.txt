@@ -1,6 +1,12 @@
 # Dev environment
-pip
 autopep8
 
 # App
-flask
+fastapi
+sqlalchemy
+pydantic
+passlib[bcrypt]
+python-jose[cryptography]
+uvicorn
+psycopg2-binary
+python-dotenv

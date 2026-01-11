@@ -1,28 +1,22 @@
-from fastapi import Depends, HTTPException, status
-from fastapi.security import OAuth2PasswordBearer
-from jose import JWTError, jwt
+from fastapi import APIRouter, Depends, HTTPException
+from fastapi.security import OAuth2PasswordRequestForm
 from sqlalchemy.orm import Session
-from core.db import get_db
+
+from core.security import verify_password, create_access_token
 from crud import admins as crud_admins
-from models import Admin
-from core.security import SECRET_KEY, ALGORITHM
+from schemas.admins import Admin
+from core.db import get_db
 
-oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/api/v1/admin/admins/login")
+router = APIRouter()
 
-def get_current_admin(token: str = Depends(oauth2_scheme), db: Session = Depends(get_db)):
-    credentials_exception = HTTPException(
-        status_code=status.HTTP_401_UNAUTHORIZED,
-        detail="Could not validate credentials",
-        headers={"WWW-Authenticate": "Bearer"},
-    )
-    try:
-        payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
-        email: str = payload.get("sub")
-        if email is None:
-            raise credentials_exception
-    except JWTError:
-        raise credentials_exception
-    admin = crud_admins.get_admin_by_email(db, email=email)
-    if admin is None:
-        raise credentials_exception
-    return admin
+@router.post("/login")
+def login(db: Session = Depends(get_db), form_data: OAuth2PasswordRequestForm = Depends()):
+    admin = crud_admins.get_admin_by_email(db, email=form_data.username)
+    if not admin or not verify_password(form_data.password, admin.hashed_password):
+        raise HTTPException(
+            status_code=401,
+            detail="Incorrect username or password",
+            headers={"WWW-Authenticate": "Bearer"},
+        )
+    access_token = create_access_token(data={"sub": admin.email})
+    return {"access_token": access_token, "token_type": "bearer"}

@@ -1,6 +1,5 @@
 
-from sqlalchemy import Column, Integer, String, Boolean, DateTime, Text, ForeignKey
-from sqlalchemy.orm import relationship
+from sqlalchemy import Column, Integer, String, Boolean, DateTime, Text
 from sqlalchemy.sql import func
 from core.db import Base
 
@@ -12,8 +11,7 @@ class Opinion(Base):
     slug = Column(String, unique=True, index=True, nullable=False)
     cover_image = Column(String, nullable=True)
     content = Column(Text, nullable=False)
-    author_id = Column(Integer, ForeignKey("admins.id"), nullable=False)
-    author = relationship("Admin")
+    author = Column(String, nullable=False)
     is_published = Column(Boolean, default=False)
     is_featured = Column(Boolean, default=False)
     created_at = Column(DateTime(timezone=True), server_default=func.now())

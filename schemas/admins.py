@@ -1,9 +1,14 @@
-
 from pydantic import BaseModel
 
-class Admin(BaseModel):
+class AdminBase(BaseModel):
     name: str
     email: str
 
+class AdminCreate(AdminBase):
+    password: str
+
+class Admin(AdminBase):
+    id: int
+
     class Config:
-        from_attributes = True
+        orm_mode = True
