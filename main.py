@@ -1,15 +1,21 @@
-import os
+from fastapi import FastAPI
+from core.db import engine
+from models import admins, stories, opinions, videos
+from api.v1.admin import admins as admin_admins, stories as admin_stories, opinions as admin_opinions, videos as admin_videos
+from api.v1.public import stories as public_stories, opinions as public_opinions, videos as public_videos
 
-from flask import Flask, send_file
+admins.Base.metadata.create_all(bind=engine)
+stories.Base.metadata.create_all(bind=engine)
+opinions.Base.metadata.create_all(bind=engine)
+videos.Base.metadata.create_all(bind=engine)
 
-app = Flask(__name__)
+app = FastAPI()
 
-@app.route("/")
-def index():
-    return send_file('src/index.html')
+app.include_router(admin_admins.router, prefix="/api/v1/admin/admins", tags=["admin_admins"])
+app.include_router(admin_stories.router, prefix="/api/v1/admin/stories", tags=["admin_stories"])
+app.include_router(admin_opinions.router, prefix="/api/v1/admin/opinions", tags=["admin_opinions"])
+app.include_router(admin_videos.router, prefix="/api/v1/admin/videos", tags=["admin_videos"])
 
-def main():
-    app.run(port=int(os.environ.get('PORT', 80)))
-
-if __name__ == "__main__":
-    main()
+app.include_router(public_stories.router, prefix="/api/v1/public/stories", tags=["public_stories"])
+app.include_router(public_opinions.router, prefix="/api/v1/public/opinions", tags=["public_opinions"])
+app.include_router(public_videos.router, prefix="/api/v1/public/videos", tags=["public_videos"])
