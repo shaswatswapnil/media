@@ -1,5 +1,5 @@
 from sqlalchemy.orm import Session
-from models.admins import Admin
+from models import Admin
 from schemas.admins import AdminCreate
 from core.security import get_password_hash
 

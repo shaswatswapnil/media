@@ -1,5 +1,5 @@
 from sqlalchemy.orm import Session
-from models.videos import Video
+from models import Video
 from schemas.videos import VideoCreate
 
 def create_video(db: Session, video: VideoCreate):
