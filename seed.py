@@ -7,9 +7,9 @@ from core.security import get_password_hash
 async def main():
     db = await anext(get_db())
     admin = Admin(
-        name="Admin",
-        email="admin@example.com",
-        password_hash=get_password_hash("password"),
+        name="shaswat",
+        email="shaswat785@gmail.com",
+        password_hash=get_password_hash("311001"),
     )
     db.add(admin)
     await db.commit()
