@@ -9,8 +9,14 @@ from core.db import get_db
 
 router = APIRouter()
 
-@router.post("/login")
+@router.post("/login", summary="Admin login")
 def login(db: Session = Depends(get_db), form_data: OAuth2PasswordRequestForm = Depends()):
+    """
+    Logs in an admin user.
+
+    - **username**: The admin's email.
+    - **password**: The admin's password.
+    """
     admin = crud_admins.get_admin_by_email(db, email=form_data.username)
     if not admin or not verify_password(form_data.password, admin.hashed_password):
         raise HTTPException(

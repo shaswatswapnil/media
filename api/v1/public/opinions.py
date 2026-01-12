@@ -6,13 +6,24 @@ from core.db import get_db
 
 router = APIRouter()
 
-@router.get("/", response_model=list[Opinion])
+@router.get("/", response_model=list[Opinion], summary="Read all opinions")
 def read_opinions(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
+    """
+    Read all opinions with pagination.
+
+    - **skip**: The number of opinions to skip.
+    - **limit**: The maximum number of opinions to return.
+    """
     opinions = crud_opinions.get_opinions(db, skip=skip, limit=limit)
     return opinions
 
-@router.get("/{opinion_id}", response_model=Opinion)
+@router.get("/{opinion_id}", response_model=Opinion, summary="Read an opinion by ID")
 def read_opinion(opinion_id: int, db: Session = Depends(get_db)):
+    """
+    Read an opinion by its ID.
+
+    - **opinion_id**: The ID of the opinion to return.
+    """
     db_opinion = crud_opinions.get_opinion(db, opinion_id=opinion_id)
     if db_opinion is None:
         raise HTTPException(status_code=404, detail="Opinion not found")

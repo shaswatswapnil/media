@@ -7,8 +7,14 @@ from core.db import get_db
 
 router = APIRouter()
 
-@router.post("/", response_model=Admin)
+@router.post("/", response_model=Admin, summary="Create a new admin")
 def create_admin(admin: AdminCreate, db: Session = Depends(get_db)):
+    """
+    Create a new admin user.
+
+    - **email**: The email of the admin.
+    - **password**: The password of the admin.
+    """
     db_admin = crud_admins.get_admin_by_email(db, email=admin.email)
     if db_admin:
         raise HTTPException(status_code=400, detail="Email already registered")

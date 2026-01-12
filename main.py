@@ -2,7 +2,11 @@ from fastapi import FastAPI
 from api.v1.admin import admins as admin_admins, stories as admin_stories, opinions as admin_opinions, videos as admin_videos, auth as admin_auth
 from api.v1.public import stories as public_stories, opinions as public_opinions, videos as public_videos
 
-app = FastAPI()
+app = FastAPI(
+    title="My Personal API",
+    description="This is my personal API. It has public endpoints for my stories, opinions, and videos. It also has admin endpoints for me to manage the content.",
+    version="1.0.0",
+)
 
 # Admin Endpoints
 app.include_router(admin_auth.router, prefix="/api/v1/admin/auth", tags=["Admin Authentication"])

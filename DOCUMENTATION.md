@@ -9,17 +9,76 @@ All `POST` and `DELETE` endpoints under the `/api/v1/admin/` path are protected 
 - **Header Name**: `Authorization`
 - **Header Value**: `Bearer <YOUR_JWT_TOKEN>`
 
-A token can be obtained by authenticating against the `/api/v1/auth/login` endpoint.
+A token can be obtained by authenticating against the `/api/v1/admin/auth/login` endpoint.
 
 ---
 
-## Endpoints
+## Public Endpoints
+
+These endpoints are publicly accessible and do not require authentication.
+
+### Stories
+
+#### 1. Get All Stories
+
+- **Endpoint**: `GET /api/v1/public/stories/`
+- **Description**: Retrieves a list of all published stories.
+- **Query Parameters**:
+    - `skip` (optional, default: 0): The number of stories to skip.
+    - `limit` (optional, default: 100): The maximum number of stories to return.
+- **Response**: A list of story objects.
+
+#### 2. Get a Story by ID
+
+- **Endpoint**: `GET /api/v1/public/stories/{story_id}`
+- **Description**: Retrieves a single story by its ID.
+- **Response**: The story object.
+
+### Opinions
+
+#### 1. Get All Opinions
+
+- **Endpoint**: `GET /api/v1/public/opinions/`
+- **Description**: Retrieves a list of all published opinions.
+- **Query Parameters**:
+    - `skip` (optional, default: 0): The number of opinions to skip.
+    - `limit` (optional, default: 100): The maximum number of opinions to return.
+- **Response**: A list of opinion objects.
+
+#### 2. Get an Opinion by ID
+
+- **Endpoint**: `GET /api/v1/public/opinions/{opinion_id}`
+- **Description**: Retrieves a single opinion by its ID.
+- **Response**: The opinion object.
+
+### Videos
+
+#### 1. Get All Videos
+
+- **Endpoint**: `GET /api/v1/public/videos/`
+- **Description**: Retrieves a list of all published videos.
+- **Query Parameters**:
+    - `skip` (optional, default: 0): The number of videos to skip.
+    - `limit` (optional, default: 100): The maximum number of videos to return.
+- **Response**: A list of video objects.
+
+#### 2. Get a Video by ID
+
+- **Endpoint**: `GET /api/v1/public/videos/{video_id}`
+- **Description**: Retrieves a single video by its ID.
+- **Response**: The video object.
+
+---
+
+## Admin Endpoints
+
+These endpoints require admin authentication.
 
 ### Authentication
 
 #### 1. Login
 
-- **Endpoint**: `POST /api/v1/auth/login`
+- **Endpoint**: `POST /api/v1/admin/auth/login`
 - **Description**: Authenticates an admin user and returns a JWT token.
 - **Request Body**:
   ```json
@@ -36,11 +95,7 @@ A token can be obtained by authenticating against the `/api/v1/auth/login` endpo
   }
   ```
 
----
-
 ### Stories
-
-The following endpoints are for managing stories. Admin authentication is required.
 
 #### 1. Create a Story
 
@@ -59,18 +114,6 @@ The following endpoints are for managing stories. Admin authentication is requir
   }
   ```
 - **Response**: The newly created story object, including its `id`.
-  ```json
-  {
-    "id": 1,
-    "title": "New Story Title",
-    "slug": "new-story-title",
-    "cover_image": "http://example.com/image.jpg",
-    "content": "This is the full content of the story.",
-    "author": "Author Name",
-    "is_published": false,
-    "is_featured": false
-  }
-  ```
 
 #### 2. Delete a Story
 
@@ -78,11 +121,7 @@ The following endpoints are for managing stories. Admin authentication is requir
 - **Description**: Deletes a story by its ID.
 - **Response**: The deleted story object.
 
----
-
 ### Opinions
-
-The following endpoints are for managing opinions. Admin authentication is required.
 
 #### 1. Create an Opinion
 
@@ -108,11 +147,7 @@ The following endpoints are for managing opinions. Admin authentication is requi
 - **Description**: Deletes an opinion by its ID.
 - **Response**: The deleted opinion object.
 
----
-
 ### Videos
-
-The following endpoints are for managing videos. Admin authentication is required.
 
 #### 1. Create a Video
 
@@ -122,12 +157,7 @@ The following endpoints are for managing videos. Admin authentication is require
   ```json
   {
     "title": "New Video Title",
-    "slug": "new-video-title",
-    "cover_image": "http://example.com/image.jpg",
-    "content": "This is the video embed code or description.",
-    "author": "Author Name",
-    "is_published": false,
-    "is_featured": false
+    "url": "http://example.com/video.mp4"
   }
   ```
 - **Response**: The newly created video object, including its `id`.
