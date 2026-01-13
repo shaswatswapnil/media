@@ -24,3 +24,11 @@ app.include_router(admin_videos.router, prefix="/api/v1/admin/videos", tags=["Ad
 app.include_router(public_stories.router, prefix="/api/v1/public/stories", tags=["Public Stories"])
 app.include_router(public_opinions.router, prefix="/api/v1/public/opinions", tags=["Public Opinions"])
 app.include_router(public_videos.router, prefix="/api/v1/public/videos", tags=["Public Videos"])
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"], 
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
