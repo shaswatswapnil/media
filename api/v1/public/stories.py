@@ -17,19 +17,7 @@ def read_stories(skip: int = 0, limit: int = 100, db: Session = Depends(get_db))
     stories = crud_stories.get_stories(db, skip=skip, limit=limit)
     return stories
 
-@router.get("/{story_id}", response_model=Story, summary="Read a story by ID")
-def read_story(story_id: int, db: Session = Depends(get_db)):
-    """
-    Read a story by its ID.
-
-    - **story_id**: The ID of the story to return.
-    """
-    db_story = crud_stories.get_story(db, story_id=story_id)
-    if db_story is None:
-        raise HTTPException(status_code=404, detail="Story not found")
-    return db_story
-
-@router.get("/slug/{slug}", response_model=Story, summary="Read a story by slug")
+@router.get("/{slug}", response_model=Story, summary="Read a story by slug")
 def read_story_by_slug(slug: str, db: Session = Depends(get_db)):
     """
     Read a story by its slug.

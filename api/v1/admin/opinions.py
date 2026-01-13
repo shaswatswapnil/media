@@ -23,16 +23,16 @@ def read_opinions(
     opinions = crud_opinions.get_opinions(db, skip=skip, limit=limit)
     return opinions
 
-@router.get("/{opinion_id}", response_model=Opinion, summary="Get an opinion by ID")
+@router.get("/{slug}", response_model=Opinion, summary="Get an opinion by slug")
 def read_opinion(
-    opinion_id: int, 
+    slug: str, 
     db: Session = Depends(get_db), 
     current_admin: Admin = Depends(get_current_admin)
 ):
     """
-    Retrieve a single opinion by its ID.
+    Retrieve a single opinion by its slug.
     """
-    db_opinion = crud_opinions.get_opinion(db, opinion_id=opinion_id)
+    db_opinion = crud_opinions.get_opinion_by_slug(db, slug=slug)
     if db_opinion is None:
         raise HTTPException(status_code=404, detail="Opinion not found")
     return db_opinion
@@ -47,26 +47,26 @@ def create_opinion(opinion: OpinionCreate, db: Session = Depends(get_db), curren
     """
     return crud_opinions.create_opinion(db=db, opinion=opinion)
 
-@router.put("/{opinion_id}", response_model=Opinion, summary="Update an opinion")
-def update_opinion(opinion_id: int, opinion: OpinionCreate, db: Session = Depends(get_db), current_admin: Admin = Depends(get_current_admin)):
+@router.put("/{slug}", response_model=Opinion, summary="Update an opinion")
+def update_opinion(slug: str, opinion: OpinionCreate, db: Session = Depends(get_db), current_admin: Admin = Depends(get_current_admin)):
     """
-    Update an opinion by its ID.
+    Update an opinion by its slug.
 
-    - **opinion_id**: The ID of the opinion to update.
+    - **slug**: The slug of the opinion to update.
     """
-    db_opinion = crud_opinions.update_opinion(db=db, opinion_id=opinion_id, opinion=opinion)
+    db_opinion = crud_opinions.update_opinion_by_slug(db=db, slug=slug, opinion=opinion)
     if db_opinion is None:
         raise HTTPException(status_code=404, detail="Opinion not found")
     return db_opinion
 
-@router.delete("/{opinion_id}", response_model=Opinion, summary="Delete an opinion")
-def delete_opinion(opinion_id: int, db: Session = Depends(get_db), current_admin: Admin = Depends(get_current_admin)):
+@router.delete("/{slug}", response_model=Opinion, summary="Delete an opinion")
+def delete_opinion(slug: str, db: Session = Depends(get_db), current_admin: Admin = Depends(get_current_admin)):
     """
-    Delete an opinion by its ID.
+    Delete an opinion by its slug.
 
-    - **opinion_id**: The ID of the opinion to delete.
+    - **slug**: The slug of the opinion to delete.
     """
-    db_opinion = crud_opinions.delete_opinion(db=db, opinion_id=opinion_id)
+    db_opinion = crud_opinions.delete_opinion_by_slug(db=db, slug=slug)
     if db_opinion is None:
         raise HTTPException(status_code=404, detail="Opinion not found")
     return db_opinion

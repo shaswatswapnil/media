@@ -23,16 +23,16 @@ def read_stories(
     stories = crud_stories.get_stories(db, skip=skip, limit=limit)
     return stories
 
-@router.get("/{story_id}", response_model=Story, summary="Get a story by ID")
+@router.get("/{slug}", response_model=Story, summary="Get a story by slug")
 def read_story(
-    story_id: int, 
+    slug: str, 
     db: Session = Depends(get_db), 
     current_admin: Admin = Depends(get_current_admin)
 ):
     """
-    Retrieve a single story by its ID.
+    Retrieve a single story by its slug.
     """
-    db_story = crud_stories.get_story(db, story_id=story_id)
+    db_story = crud_stories.get_story_by_slug(db, slug=slug)
     if db_story is None:
         raise HTTPException(status_code=404, detail="Story not found")
     return db_story
@@ -47,26 +47,26 @@ def create_story(story: StoryCreate, db: Session = Depends(get_db), current_admi
     """
     return crud_stories.create_story(db=db, story=story)
 
-@router.put("/{story_id}", response_model=Story, summary="Update a story")
-def update_story(story_id: int, story: StoryCreate, db: Session = Depends(get_db), current_admin: Admin = Depends(get_current_admin)):
+@router.put("/{slug}", response_model=Story, summary="Update a story")
+def update_story(slug: str, story: StoryCreate, db: Session = Depends(get_db), current_admin: Admin = Depends(get_current_admin)):
     """
-    Update a story by its ID.
+    Update a story by its slug.
 
-    - **story_id**: The ID of the story to update.
+    - **slug**: The slug of the story to update.
     """
-    db_story = crud_stories.update_story(db=db, story_id=story_id, story=story)
+    db_story = crud_stories.update_story_by_slug(db=db, slug=slug, story=story)
     if db_story is None:
         raise HTTPException(status_code=404, detail="Story not found")
     return db_story
 
-@router.delete("/{story_id}", response_model=Story, summary="Delete a story")
-def delete_story(story_id: int, db: Session = Depends(get_db), current_admin: Admin = Depends(get_current_admin)):
+@router.delete("/{slug}", response_model=Story, summary="Delete a story")
+def delete_story(slug: str, db: Session = Depends(get_db), current_admin: Admin = Depends(get_current_admin)):
     """
-    Delete a story by its ID.
+    Delete a story by its slug.
 
-    - **story_id**: The ID of the story to delete.
+    - **slug**: The slug of the story to delete.
     """
-    db_story = crud_stories.delete_story(db=db, story_id=story_id)
+    db_story = crud_stories.delete_story_by_slug(db=db, slug=slug)
     if db_story is None:
         raise HTTPException(status_code=404, detail="Story not found")
     return db_story

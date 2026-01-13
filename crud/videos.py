@@ -18,8 +18,8 @@ def create_video(db: Session, video: VideoCreate):
     db.refresh(db_video)
     return db_video
 
-def update_video(db: Session, video_id: int, video: VideoCreate):
-    db_video = get_video(db, video_id)
+def update_video_by_slug(db: Session, slug: str, video: VideoCreate):
+    db_video = get_video_by_slug(db, slug)
     if db_video:
         for key, value in video.dict().items():
             setattr(db_video, key, value)
@@ -27,8 +27,8 @@ def update_video(db: Session, video_id: int, video: VideoCreate):
         db.refresh(db_video)
     return db_video
 
-def delete_video(db: Session, video_id: int):
-    db_video = db.query(Video).filter(Video.id == video_id).first()
+def delete_video_by_slug(db: Session, slug: str):
+    db_video = db.query(Video).filter(Video.slug == slug).first()
     if db_video:
         db.delete(db_video)
         db.commit()

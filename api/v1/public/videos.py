@@ -17,19 +17,7 @@ def read_videos(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
     videos = crud_videos.get_videos(db, skip=skip, limit=limit)
     return videos
 
-@router.get("/{video_id}", response_model=Video, summary="Read a video by ID")
-def read_video(video_id: int, db: Session = Depends(get_db)):
-    """
-    Read a video by its ID.
-
-    - **video_id**: The ID of the video to return.
-    """
-    db_video = crud_videos.get_video(db, video_id=video_id)
-    if db_video is None:
-        raise HTTPException(status_code=404, detail="Video not found")
-    return db_video
-
-@router.get("/slug/{slug}", response_model=Video, summary="Read a video by slug")
+@router.get("/{slug}", response_model=Video, summary="Read a video by slug")
 def read_video_by_slug(slug: str, db: Session = Depends(get_db)):
     """
     Read a video by its slug.

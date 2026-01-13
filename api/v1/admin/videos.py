@@ -23,16 +23,16 @@ def read_videos(
     videos = crud_videos.get_videos(db, skip=skip, limit=limit)
     return videos
 
-@router.get("/{video_id}", response_model=Video, summary="Get a video by ID")
+@router.get("/{slug}", response_model=Video, summary="Get a video by slug")
 def read_video(
-    video_id: int, 
+    slug: str, 
     db: Session = Depends(get_db), 
     current_admin: Admin = Depends(get_current_admin)
 ):
     """
-    Retrieve a single video by its ID.
+    Retrieve a single video by its slug.
     """
-    db_video = crud_videos.get_video(db, video_id=video_id)
+    db_video = crud_videos.get_video_by_slug(db, slug=slug)
     if db_video is None:
         raise HTTPException(status_code=404, detail="Video not found")
     return db_video
@@ -47,26 +47,26 @@ def create_video(video: VideoCreate, db: Session = Depends(get_db), current_admi
     """
     return crud_videos.create_video(db=db, video=video)
 
-@router.put("/{video_id}", response_model=Video, summary="Update a video")
-def update_video(video_id: int, video: VideoCreate, db: Session = Depends(get_db), current_admin: Admin = Depends(get_current_admin)):
+@router.put("/{slug}", response_model=Video, summary="Update a video")
+def update_video(slug: str, video: VideoCreate, db: Session = Depends(get_db), current_admin: Admin = Depends(get_current_admin)):
     """
-    Update a video by its ID.
+    Update a video by its slug.
 
-    - **video_id**: The ID of the video to update.
+    - **slug**: The slug of the video to update.
     """
-    db_video = crud_videos.update_video(db=db, video_id=video_id, video=video)
+    db_video = crud_videos.update_video_by_slug(db=db, slug=slug, video=video)
     if db_video is None:
         raise HTTPException(status_code=404, detail="Video not found")
     return db_video
 
-@router.delete("/{video_id}", response_model=Video, summary="Delete a video")
-def delete_video(video_id: int, db: Session = Depends(get_db), current_admin: Admin = Depends(get_current_admin)):
+@router.delete("/{slug}", response_model=Video, summary="Delete a video")
+def delete_video(slug: str, db: Session = Depends(get_db), current_admin: Admin = Depends(get_current_admin)):
     """
-    Delete a video by its ID.
+    Delete a video by its slug.
 
-    - **video_id**: The ID of the video to delete.
+    - **slug**: The slug of the video to delete.
     """
-    db_video = crud_videos.delete_video(db=db, video_id=video_id)
+    db_video = crud_videos.delete_video_by_slug(db=db, slug=slug)
     if db_video is None:
         raise HTTPException(status_code=404, detail="Video not found")
     return db_video

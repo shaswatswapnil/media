@@ -18,8 +18,8 @@ def create_story(db: Session, story: StoryCreate):
     db.refresh(db_story)
     return db_story
 
-def update_story(db: Session, story_id: int, story: StoryCreate):
-    db_story = get_story(db, story_id)
+def update_story_by_slug(db: Session, slug: str, story: StoryCreate):
+    db_story = get_story_by_slug(db, slug)
     if db_story:
         for key, value in story.dict().items():
             setattr(db_story, key, value)
@@ -27,8 +27,8 @@ def update_story(db: Session, story_id: int, story: StoryCreate):
         db.refresh(db_story)
     return db_story
 
-def delete_story(db: Session, story_id: int):
-    db_story = db.query(Story).filter(Story.id == story_id).first()
+def delete_story_by_slug(db: Session, slug: str):
+    db_story = db.query(Story).filter(Story.slug == slug).first()
     if db_story:
         db.delete(db_story)
         db.commit()
