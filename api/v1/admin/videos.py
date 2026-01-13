@@ -1,12 +1,14 @@
-from fastapi import APIRouter, Depends, HTTPException
-from sqlalchemy.orm import Session
-from typing import List
 
-from schemas.videos import Video, VideoCreate
+from fastapi import APIRouter, Depends, HTTPException, File, UploadFile
+from sqlalchemy.orm import Session
+from typing import List, Optional
+
+from schemas.videos import Video, VideoCreate, VideoUpdate
 from crud import videos as crud_videos
 from core.db import get_db
 from api.v1.dependencies import get_current_admin
 from models.admins import Admin
+from utils.file_uploads import save_upload_file
 
 router = APIRouter()
 
@@ -38,22 +40,45 @@ def read_video(
     return db_video
 
 @router.post("/", response_model=Video, summary="Create a new video")
-def create_video(video: VideoCreate, db: Session = Depends(get_db), current_admin: Admin = Depends(get_current_admin)):
+def create_video(
+    video: VideoCreate,
+    db: Session = Depends(get_db), 
+    current_admin: Admin = Depends(get_current_admin),
+    cover_image: Optional[UploadFile] = File(None),
+    video_file: Optional[UploadFile] = File(None)
+):
     """
     Create a new video.
 
     - **title**: The title of the video.
     - **url**: The URL of the video.
     """
+    if cover_image:
+        video.cover_image = save_upload_file(cover_image)
+    if video_file:
+        video.video_path = save_upload_file(video_file)
+
     return crud_videos.create_video(db=db, video=video)
 
 @router.put("/{slug}", response_model=Video, summary="Update a video")
-def update_video(slug: str, video: VideoCreate, db: Session = Depends(get_db), current_admin: Admin = Depends(get_current_admin)):
+def update_video(
+    slug: str, 
+    video: VideoUpdate,
+    db: Session = Depends(get_db), 
+    current_admin: Admin = Depends(get_current_admin),
+    cover_image: Optional[UploadFile] = File(None),
+    video_file: Optional[UploadFile] = File(None)
+):
     """
     Update a video by its slug.
 
     - **slug**: The slug of the video to update.
     """
+    if cover_image:
+        video.cover_image = save_upload_file(cover_image)
+    if video_file:
+        video.video_path = save_upload_file(video_file)
+
     db_video = crud_videos.update_video_by_slug(db=db, slug=slug, video=video)
     if db_video is None:
         raise HTTPException(status_code=404, detail="Video not found")

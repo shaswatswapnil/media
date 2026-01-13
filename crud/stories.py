@@ -1,6 +1,7 @@
+
 from sqlalchemy.orm import Session
 from models.stories import Story
-from schemas.stories import StoryCreate
+from schemas.stories import StoryCreate, StoryUpdate
 
 def get_story(db: Session, story_id: int):
     return db.query(Story).filter(Story.id == story_id).first()
@@ -12,16 +13,17 @@ def get_stories(db: Session, skip: int = 0, limit: int = 100):
     return db.query(Story).offset(skip).limit(limit).all()
 
 def create_story(db: Session, story: StoryCreate):
-    db_story = Story(**story.dict())
+    db_story = Story(**story.model_dump())
     db.add(db_story)
     db.commit()
     db.refresh(db_story)
     return db_story
 
-def update_story_by_slug(db: Session, slug: str, story: StoryCreate):
+def update_story_by_slug(db: Session, slug: str, story: StoryUpdate):
     db_story = get_story_by_slug(db, slug)
     if db_story:
-        for key, value in story.dict().items():
+        update_data = story.model_dump(exclude_unset=True)
+        for key, value in update_data.items():
             setattr(db_story, key, value)
         db.commit()
         db.refresh(db_story)

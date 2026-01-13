@@ -10,6 +10,7 @@ class Video(Base):
     title = Column(String, nullable=False)
     slug = Column(String, unique=True, index=True, nullable=False)
     cover_image = Column(String, nullable=True)
+    video_path = Column(String, nullable=True)
     content = Column(Text, nullable=False)
     author = Column(String, nullable=False)
     is_published = Column(Boolean, default=False)

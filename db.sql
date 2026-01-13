@@ -1,3 +1,4 @@
+
 -- Admin Table
 CREATE TABLE admins (
     id SERIAL PRIMARY KEY,
@@ -13,6 +14,7 @@ CREATE TABLE stories (
     title VARCHAR(255) NOT NULL,
     slug VARCHAR(255) UNIQUE NOT NULL,
     cover_image VARCHAR(255),
+    main_photo_path VARCHAR(255),
     content TEXT NOT NULL,
     author VARCHAR(255) NOT NULL,
     is_published BOOLEAN DEFAULT FALSE,
@@ -27,6 +29,7 @@ CREATE TABLE opinions (
     title VARCHAR(255) NOT NULL,
     slug VARCHAR(255) UNIQUE NOT NULL,
     cover_image VARCHAR(255),
+    main_photo_path VARCHAR(255),
     content TEXT NOT NULL,
     author VARCHAR(255) NOT NULL,
     is_published BOOLEAN DEFAULT FALSE,
@@ -41,7 +44,7 @@ CREATE TABLE videos (
     title VARCHAR(255) NOT NULL,
     slug VARCHAR(255) UNIQUE NOT NULL,
     cover_image VARCHAR(255),
-    content TEXT NOT NULL,
+    video_path VARCHAR(255),
     author VARCHAR(255) NOT NULL,
     is_published BOOLEAN DEFAULT FALSE,
     is_featured BOOLEAN DEFAULT FALSE,
