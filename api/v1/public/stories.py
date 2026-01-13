@@ -28,3 +28,15 @@ def read_story(story_id: int, db: Session = Depends(get_db)):
     if db_story is None:
         raise HTTPException(status_code=404, detail="Story not found")
     return db_story
+
+@router.get("/slug/{slug}", response_model=Story, summary="Read a story by slug")
+def read_story_by_slug(slug: str, db: Session = Depends(get_db)):
+    """
+    Read a story by its slug.
+
+    - **slug**: The slug of the story to return.
+    """
+    db_story = crud_stories.get_story_by_slug(db, slug=slug)
+    if db_story is None:
+        raise HTTPException(status_code=404, detail="Story not found")
+    return db_story

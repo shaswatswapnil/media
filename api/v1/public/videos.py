@@ -28,3 +28,15 @@ def read_video(video_id: int, db: Session = Depends(get_db)):
     if db_video is None:
         raise HTTPException(status_code=404, detail="Video not found")
     return db_video
+
+@router.get("/slug/{slug}", response_model=Video, summary="Read a video by slug")
+def read_video_by_slug(slug: str, db: Session = Depends(get_db)):
+    """
+    Read a video by its slug.
+
+    - **slug**: The slug of the video to return.
+    """
+    db_video = crud_videos.get_video_by_slug(db, slug=slug)
+    if db_video is None:
+        raise HTTPException(status_code=404, detail="Video not found")
+    return db_video
