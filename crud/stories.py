@@ -1,5 +1,5 @@
 from sqlalchemy.orm import Session
-from models import Story
+from models.stories import Story
 from schemas.stories import StoryCreate
 
 def create_story(db: Session, story: StoryCreate):

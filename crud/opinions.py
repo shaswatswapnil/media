@@ -1,5 +1,5 @@
 from sqlalchemy.orm import Session
-from models import Opinion
+from models.opinions import Opinion
 from schemas.opinions import OpinionCreate
 
 def create_opinion(db: Session, opinion: OpinionCreate):
