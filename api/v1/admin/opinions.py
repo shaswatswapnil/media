@@ -5,7 +5,7 @@ from schemas.opinions import Opinion, OpinionCreate
 from crud import opinions as crud_opinions
 from core.db import get_db
 from api.v1.dependencies import get_current_admin
-from models import Admin
+from models.admins import Admin
 
 router = APIRouter()
 

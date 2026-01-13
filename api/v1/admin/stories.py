@@ -5,7 +5,7 @@ from schemas.stories import Story, StoryCreate
 from crud import stories as crud_stories
 from core.db import get_db
 from api.v1.dependencies import get_current_admin
-from models import Admin
+from models.admins import Admin
 
 router = APIRouter()
 
