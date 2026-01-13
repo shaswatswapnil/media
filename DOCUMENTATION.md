@@ -1,3 +1,4 @@
+
 # FastAPI Content API Documentation
 
 This document provides detailed information about the API, including authentication, available endpoints, and usage examples.
@@ -10,6 +11,10 @@ All `POST`, `PUT`, and `DELETE` endpoints under the `/api/v1/admin/` path are pr
 - **Header Value**: `Bearer <YOUR_JWT_TOKEN>`
 
 A token can be obtained by authenticating against the `/api/v1/admin/auth/login` endpoint.
+
+## CORS (Cross-Origin Resource Sharing)
+
+The API has CORS enabled to allow requests from any origin. This is configured in the main application file (`main.py`) and can be customized as needed.
 
 ---
 
@@ -122,35 +127,29 @@ These endpoints require admin authentication.
 #### 3. Create a Story
 - **Endpoint**: `POST /api/v1/admin/stories/`
 - **Description**: Creates a new story.
-- **Request Body**:
-  ```json
-  {
-    "title": "New Story Title",
-    "slug": "new-story-title",
-    "cover_image": "http://example.com/image.jpg",
-    "content": "This is the full content of the story.",
-    "author": "Author Name",
-    "is_published": false,
-    "is_featured": false
-  }
-  ```
+- **Request Body** (`multipart/form-data`):
+    - `title`: The title of the story.
+    - `slug`: The slug for the story URL.
+    - `content`: The main content of the story.
+    - `author`: The author's name.
+    - `cover_image`: The cover image file to upload.
+    - `main_photo`: The main photo file to upload.
+    - `is_published`: `true` or `false`.
+    - `is_featured`: `true` or `false`.
 - **Response**: The newly created story object.
 
 #### 4. Update a Story
 - **Endpoint**: `PUT /api/v1/admin/stories/{slug}`
 - **Description**: Updates a story by its slug.
-- **Request Body**:
-  ```json
-  {
-    "title": "Updated Story Title",
-    "slug": "updated-story-title",
-    "cover_image": "http://example.com/updated_image.jpg",
-    "content": "This is the updated content of the story.",
-    "author": "Author Name",
-    "is_published": true,
-    "is_featured": true
-  }
-  ```
+- **Request Body** (`multipart/form-data`):
+    - `title`: (Optional) The updated title.
+    - `slug`: (Optional) The updated slug.
+    - `content`: (Optional) The updated content.
+    - `author`: (Optional) The updated author.
+    - `cover_image`: (Optional) A new cover image file.
+    - `main_photo`: (Optional) A new main photo file.
+    - `is_published`: (Optional) `true` or `false`.
+    - `is_featured`: (Optional) `true` or `false`.
 - **Response**: The updated story object.
 
 #### 5. Delete a Story
@@ -173,35 +172,29 @@ These endpoints require admin authentication.
 #### 3. Create an Opinion
 - **Endpoint**: `POST /api/v1/admin/opinions/`
 - **Description**: Creates a new opinion piece.
-- **Request Body**:
-  ```json
-  {
-    "title": "New Opinion Title",
-    "slug": "new-opinion-title",
-    "cover_image": "http://example.com/image.jpg",
-    "content": "This is the full content of the opinion.",
-    "author": "Author Name",
-    "is_published": false,
-    "is_featured": false
-  }
-  ```
+- **Request Body** (`multipart/form-data`):
+    - `title`: The title of the opinion.
+    - `slug`: The slug for the opinion URL.
+    - `content`: The main content of the opinion.
+    - `author`: The author's name.
+    - `cover_image`: The cover image file to upload.
+    - `main_photo`: The main photo file to upload.
+    - `is_published`: `true` or `false`.
+    - `is_featured`: `true` or `false`.
 - **Response**: The newly created opinion object.
 
 #### 4. Update an Opinion
 - **Endpoint**: `PUT /api/v1/admin/opinions/{slug}`
 - **Description**: Updates an opinion by its slug.
-- **Request Body**:
-  ```json
-  {
-    "title": "Updated Opinion Title",
-    "slug": "updated-opinion-title",
-    "cover_image": "http://example.com/updated_image.jpg",
-    "content": "This is the updated content of the opinion.",
-    "author": "Author Name",
-    "is_published": true,
-    "is_featured": true
-  }
-  ```
+- **Request Body** (`multipart/form-data`):
+    - `title`: (Optional) The updated title.
+    - `slug`: (Optional) The updated slug.
+    - `content`: (Optional) The updated content.
+    - `author`: (Optional) The updated author.
+    - `cover_image`: (Optional) A new cover image file.
+    - `main_photo`: (Optional) A new main photo file.
+    - `is_published`: (Optional) `true` or `false`.
+    - `is_featured`: (Optional) `true` or `false`.
 - **Response**: The updated opinion object.
 
 #### 5. Delete an Opinion
@@ -224,35 +217,27 @@ These endpoints require admin authentication.
 #### 3. Create a Video
 - **Endpoint**: `POST /api/v1/admin/videos/`
 - **Description**: Creates a new video entry.
-- **Request Body**:
-  ```json
-  {
-    "title": "New Video Title",
-    "slug": "new-video-title",
-    "cover_image": "http://example.com/video_cover.jpg",
-    "content": "This is the description or content for the video.",
-    "author": "Video Creator Name",
-    "is_published": false,
-    "is_featured": false
-  }
-  ```
+- **Request Body** (`multipart/form-data`):
+    - `title`: The title of the video.
+    - `slug`: The slug for the video URL.
+    - `author`: The author's name.
+    - `cover_image`: The cover image file to upload.
+    - `video`: The video file to upload.
+    - `is_published`: `true` or `false`.
+    - `is_featured`: `true` or `false`.
 - **Response**: The newly created video object.
 
 #### 4. Update a Video
 - **Endpoint**: `PUT /api/v1/admin/videos/{slug}`
 - **Description**: Updates a video by its slug.
-- **Request Body**:
-  ```json
-  {
-    "title": "Updated Video Title",
-    "slug": "updated-video-title",
-    "cover_image": "http://example.com/new_video_cover.jpg",
-    "content": "This is the updated description for the video.",
-    "author": "Video Creator Name",
-    "is_published": true,
-    "is_featured": true
-  }
-  ```
+- **Request Body** (`multipart/form-data`):
+    - `title`: (Optional) The updated title.
+    - `slug`: (Optional) The updated slug.
+    - `author`: (Optional) The updated author.
+    - `cover_image`: (Optional) A new cover image file.
+    - `video`: (Optional) A new video file.
+    - `is_published`: (Optional) `true` or `false`.
+    - `is_featured`: (Optional) `true` or `false`.
 - **Response**: The updated video object.
 
 #### 5. Delete a Video
