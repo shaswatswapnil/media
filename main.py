@@ -1,6 +1,7 @@
 
 from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
+from fastapi.middleware.cors import CORSMiddleware
 from api.v1.admin import admins as admin_admins, stories as admin_stories, opinions as admin_opinions, videos as admin_videos, auth as admin_auth
 from api.v1.public import stories as public_stories, opinions as public_opinions, videos as public_videos
 
@@ -13,6 +14,15 @@ app = FastAPI(
 # Mount the static directory to serve files
 app.mount("/static", StaticFiles(directory="static"), name="static")
 
+# Add CORS middleware
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"], 
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
 # Admin Endpoints
 app.include_router(admin_auth.router, prefix="/api/v1/admin/auth", tags=["Admin Authentication"])
 app.include_router(admin_admins.router, prefix="/api/v1/admin/admins", tags=["Admin Management"])
@@ -24,11 +34,3 @@ app.include_router(admin_videos.router, prefix="/api/v1/admin/videos", tags=["Ad
 app.include_router(public_stories.router, prefix="/api/v1/public/stories", tags=["Public Stories"])
 app.include_router(public_opinions.router, prefix="/api/v1/public/opinions", tags=["Public Opinions"])
 app.include_router(public_videos.router, prefix="/api/v1/public/videos", tags=["Public Videos"])
-
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=["*"], 
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
