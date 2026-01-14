@@ -32,12 +32,42 @@ These endpoints are publicly accessible and do not require authentication.
     - `skip` (optional, default: 0): The number of stories to skip.
     - `limit` (optional, default: 100): The maximum number of stories to return.
 - **Response**: A list of story objects.
+- **Response Body Example**:
+  ```json
+  [
+    {
+      "id": 1,
+      "title": "My Awesome Story",
+      "slug": "my-awesome-story",
+      "content": "This is the content of my awesome story.",
+      "author": "John Doe",
+      "is_published": true,
+      "is_featured": false,
+      "cover_image": "/uploads/cover_image.jpg",
+      "main_photo_path": "/uploads/main_photo.jpg"
+    }
+  ]
+  ```
 
 #### 2. Get a Story by Slug
 
 - **Endpoint**: `GET /api/v1/public/stories/{slug}`
 - **Description**: Retrieves a single published story by its slug.
 - **Response**: The story object.
+- **Response Body Example**:
+  ```json
+  {
+    "id": 1,
+    "title": "My Awesome Story",
+    "slug": "my-awesome-story",
+    "content": "This is the content of my awesome story.",
+    "author": "John Doe",
+    "is_published": true,
+    "is_featured": false,
+    "cover_image": "/uploads/cover_image.jpg",
+    "main_photo_path": "/uploads/main_photo.jpg"
+  }
+  ```
 
 ### Opinions
 
@@ -49,12 +79,42 @@ These endpoints are publicly accessible and do not require authentication.
     - `skip` (optional, default: 0): The number of opinions to skip.
     - `limit` (optional, default: 100): The maximum number of opinions to return.
 - **Response**: A list of opinion objects.
+- **Response Body Example**:
+  ```json
+  [
+    {
+      "id": 1,
+      "title": "A Strong Opinion",
+      "slug": "a-strong-opinion",
+      "content": "This is the content of the opinion piece.",
+      "author": "Jane Doe",
+      "is_published": true,
+      "is_featured": false,
+      "cover_image": "/uploads/cover_image.jpg",
+      "main_photo_path": "/uploads/main_photo.jpg"
+    }
+  ]
+  ```
 
 #### 2. Get an Opinion by Slug
 
 - **Endpoint**: `GET /api/v1/public/opinions/{slug}`
 - **Description**: Retrieves a single published opinion by its slug.
 - **Response**: The opinion object.
+- **Response Body Example**:
+  ```json
+  {
+    "id": 1,
+    "title": "A Strong Opinion",
+    "slug": "a-strong-opinion",
+    "content": "This is the content of the opinion piece.",
+    "author": "Jane Doe",
+    "is_published": true,
+    "is_featured": false,
+    "cover_image": "/uploads/cover_image.jpg",
+    "main_photo_path": "/uploads/main_photo.jpg"
+  }
+  ```
 
 ### Videos
 
@@ -66,12 +126,40 @@ These endpoints are publicly accessible and do not require authentication.
     - `skip` (optional, default: 0): The number of videos to skip.
     - `limit` (optional, default: 100): The maximum number of videos to return.
 - **Response**: A list of video objects.
+- **Response Body Example**:
+  ```json
+  [
+    {
+      "id": 1,
+      "title": "My Awesome Video",
+      "slug": "my-awesome-video",
+      "author": "John Doe",
+      "is_published": true,
+      "is_featured": false,
+      "cover_image": "/uploads/cover_image.jpg",
+      "video_path": "/uploads/video.mp4"
+    }
+  ]
+  ```
 
 #### 2. Get a Video by Slug
 
 - **Endpoint**: `GET /api/v1/public/videos/{slug}`
 - **Description**: Retrieves a single published video by its slug.
 - **Response**: The video object.
+- **Response Body Example**:
+  ```json
+  {
+    "id": 1,
+    "title": "My Awesome Video",
+    "slug": "my-awesome-video",
+    "author": "John Doe",
+    "is_published": true,
+    "is_featured": false,
+    "cover_image": "/uploads/cover_image.jpg",
+    "video_path": "/uploads/video.mp4"
+  }
+  ```
 
 ---
 
@@ -136,6 +224,17 @@ These endpoints require admin authentication.
     - `main_photo`: The main photo file to upload.
     - `is_published`: `true` or `false`.
     - `is_featured`: `true` or `false`.
+- **Request Body Example** (for non-file fields):
+  ```json
+  {
+    "title": "My Awesome Story",
+    "slug": "my-awesome-story",
+    "content": "This is the content of my awesome story.",
+    "author": "John Doe",
+    "is_published": true,
+    "is_featured": false
+  }
+  ```
 - **Response**: The newly created story object.
 
 #### 4. Update a Story
@@ -150,6 +249,13 @@ These endpoints require admin authentication.
     - `main_photo`: (Optional) A new main photo file.
     - `is_published`: (Optional) `true` or `false`.
     - `is_featured`: (Optional) `true` or `false`.
+- **Request Body Example** (for non-file fields):
+  ```json
+  {
+    "title": "My Updated Story Title",
+    "is_published": true
+  }
+  ```
 - **Response**: The updated story object.
 
 #### 5. Delete a Story
@@ -181,6 +287,17 @@ These endpoints require admin authentication.
     - `main_photo`: The main photo file to upload.
     - `is_published`: `true` or `false`.
     - `is_featured`: `true` or `false`.
+- **Request Body Example** (for non-file fields):
+  ```json
+  {
+    "title": "A Strong Opinion",
+    "slug": "a-strong-opinion",
+    "content": "This is the content of the opinion piece.",
+    "author": "Jane Doe",
+    "is_published": true,
+    "is_featured": false
+  }
+  ```
 - **Response**: The newly created opinion object.
 
 #### 4. Update an Opinion
@@ -195,6 +312,13 @@ These endpoints require admin authentication.
     - `main_photo`: (Optional) A new main photo file.
     - `is_published`: (Optional) `true` or `false`.
     - `is_featured`: (Optional) `true` or `false`.
+- **Request Body Example** (for non-file fields):
+  ```json
+  {
+    "title": "An Updated Opinion",
+    "is_published": true
+  }
+  ```
 - **Response**: The updated opinion object.
 
 #### 5. Delete an Opinion
@@ -225,6 +349,16 @@ These endpoints require admin authentication.
     - `video`: The video file to upload.
     - `is_published`: `true` or `false`.
     - `is_featured`: `true` or `false`.
+- **Request Body Example** (for non-file fields):
+  ```json
+  {
+    "title": "My Awesome Video",
+    "slug": "my-awesome-video",
+    "author": "John Doe",
+    "is_published": true,
+    "is_featured": false
+  }
+  ```
 - **Response**: The newly created video object.
 
 #### 4. Update a Video
@@ -238,6 +372,13 @@ These endpoints require admin authentication.
     - `video`: (Optional) A new video file.
     - `is_published`: (Optional) `true` or `false`.
     - `is_featured`: (Optional) `true` or `false`.
+- **Request Body Example** (for non-file fields):
+  ```json
+  {
+    "title": "My Updated Video Title",
+    "is_published": true
+  }
+  ```
 - **Response**: The updated video object.
 
 #### 5. Delete a Video
