@@ -39,7 +39,6 @@ class VideoCreate(VideoBase):
 
 class VideoUpdate(BaseModel):
     title: Optional[str] = None
-    slug: Optional[str] = None
     cover_image: Optional[str] = None
     video_path: Optional[str] = None
     content: Optional[str] = None
@@ -51,7 +50,6 @@ class VideoUpdate(BaseModel):
     def as_form(
         cls,
         title: Optional[str] = Form(None),
-        slug: Optional[str] = Form(None),
         content: Optional[str] = Form(None),
         author: Optional[str] = Form(None),
         is_published: Optional[bool] = Form(None),
@@ -59,7 +57,6 @@ class VideoUpdate(BaseModel):
     ):
         return cls(
             title=title,
-            slug=slug,
             content=content,
             author=author,
             is_published=is_published,
