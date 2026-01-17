@@ -4,6 +4,12 @@ from fastapi.staticfiles import StaticFiles
 from fastapi.middleware.cors import CORSMiddleware
 from api.v1.admin import admins as admin_admins, stories as admin_stories, opinions as admin_opinions, videos as admin_videos, auth as admin_auth
 from api.v1.public import stories as public_stories, opinions as public_opinions, videos as public_videos
+import os
+
+
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+
+MEDIA_DIR = os.path.join(BASE_DIR, "media")
 
 app = FastAPI(
     title="My Personal API",
@@ -11,8 +17,7 @@ app = FastAPI(
     version="1.0.0",
 )
 
-# Mount the static directory to serve files
-app.mount("/static", StaticFiles(directory="static"), name="static")
+app.mount("/media", StaticFiles(directory=MEDIA_DIR), name="media")
 
 # Add CORS middleware
 app.add_middleware(

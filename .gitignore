@@ -1,1 +1,142 @@
-.venv
+# =========================
+
+# Python
+
+# =========================
+
+**pycache**/
+*.py[cod]
+*.pyo
+*.pyd
+*.so
+*.egg-info/
+.eggs/
+build/
+dist/
+pip-wheel-metadata/
+
+# =========================
+
+# Virtual Environments
+
+# =========================
+
+venv/
+.venv/
+env/
+ENV/
+pyvm/
+chatroom/
+.python-version
+
+# =========================
+
+# Environment & Secrets
+
+# =========================
+
+.env
+.env.*
+*.env
+secrets.json
+config.json
+
+# =========================
+
+# FastAPI / Uvicorn
+
+# =========================
+
+*.log
+logs/
+uvicorn.log
+
+# =========================
+
+# Databases
+
+# =========================
+
+*.sqlite3
+*.db
+*.sqlite
+
+# =========================
+
+# Media / Uploads (IMPORTANT)
+
+# =========================
+
+uploads/
+media/uploads/
+static/uploads/
+videos/
+images/
+
+# =========================
+
+# Migrations / Cache
+
+# =========================
+
+.alembic_cache/
+.pytest_cache/
+.mypy_cache/
+ruff_cache/
+
+# =========================
+
+# Jupyter / Experiments
+
+# =========================
+
+.ipynb_checkpoints/
+
+# =========================
+
+# OS / Editor
+
+# =========================
+
+.DS_Store
+Thumbs.db
+
+# VS Code
+
+.vscode/
+*.code-workspace
+
+# PyCharm / JetBrains
+
+.idea/
+*.iml
+
+# =========================
+
+# Node / Frontend (if any)
+
+# =========================
+
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# =========================
+
+# Docker
+
+# =========================
+
+docker-compose.override.yml
+
+# =========================
+
+# Test / Coverage
+
+# =========================
+
+htmlcov/
+.coverage
+coverage.xml
+.cache/
