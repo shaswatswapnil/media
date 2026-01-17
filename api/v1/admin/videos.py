@@ -41,7 +41,7 @@ def read_video(
 
 @router.post("/", response_model=Video, summary="Create a new video")
 def create_video(
-    video: VideoCreate,
+    video: VideoCreate = Depends(VideoCreate.as_form),
     db: Session = Depends(get_db), 
     current_admin: Admin = Depends(get_current_admin),
     cover_image: Optional[UploadFile] = File(None),
@@ -49,21 +49,18 @@ def create_video(
 ):
     """
     Create a new video.
-
-    - **title**: The title of the video.
-    - **url**: The URL of the video.
     """
     if cover_image:
-        video.cover_image = save_upload_file(cover_image)
+        video.cover_image = save_upload_file(cover_image, folder="images")
     if video_file:
-        video.video_path = save_upload_file(video_file)
+        video.video_path = save_upload_file(video_file, folder="videos")
 
     return crud_videos.create_video(db=db, video=video)
 
 @router.put("/{slug}", response_model=Video, summary="Update a video")
 def update_video(
     slug: str, 
-    video: VideoUpdate,
+    video: VideoUpdate = Depends(VideoUpdate.as_form),
     db: Session = Depends(get_db), 
     current_admin: Admin = Depends(get_current_admin),
     cover_image: Optional[UploadFile] = File(None),
@@ -75,9 +72,9 @@ def update_video(
     - **slug**: The slug of the video to update.
     """
     if cover_image:
-        video.cover_image = save_upload_file(cover_image)
+        video.cover_image = save_upload_file(cover_image, folder="images")
     if video_file:
-        video.video_path = save_upload_file(video_file)
+        video.video_path = save_upload_file(video_file, folder="videos")
 
     db_video = crud_videos.update_video_by_slug(db=db, slug=slug, video=video)
     if db_video is None:

@@ -2,10 +2,13 @@
 from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
 from fastapi.middleware.cors import CORSMiddleware
+from starlette.middleware.multipart import MultiPartParser
 from api.v1.admin import admins as admin_admins, stories as admin_stories, opinions as admin_opinions, videos as admin_videos, auth as admin_auth
 from api.v1.public import stories as public_stories, opinions as public_opinions, videos as public_videos
 import os
 
+MultiPartParser.max_file_size = 500 * 1024 * 1024
+MultiPartParser.max_part_size = 500 * 1024 * 1024
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
